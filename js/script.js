@@ -21,6 +21,10 @@ submitButton.addEventListener('click', (event) => {
 
 });
 
+/*
+    A standardized, generalized way to calculate brackets that uses
+    tax brackets with any number of brackets. 
+*/
 const bracketCalculations = (taxBrackets, salaryRemaining) => {
 
     const NUM_BRACKETS = taxBrackets.length;
@@ -74,6 +78,9 @@ const bracketCalculations = (taxBrackets, salaryRemaining) => {
     return totalTaxes; 
 }
 
+/*
+    Calculates federal taxes by tax bracket 
+*/  
 const calculateFederalTaxes = (grossSalary) => {
     
     // The federal tax brackets for 2020
@@ -96,6 +103,9 @@ const calculateFederalTaxes = (grossSalary) => {
 
 }
 
+/*
+    Calculate state taxes for Wisconsin by tax bracket
+*/
 const calculateStateTaxes = (grossSalary) => {
 
     const taxBrackets = [
