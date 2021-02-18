@@ -28,6 +28,7 @@ submitButton.addEventListener('click', (event) => {
 const bracketCalculations = (taxBrackets, salaryRemaining) => {
 
     const NUM_BRACKETS = taxBrackets.length;
+    let salaryRemaining = grossSalary; // used for calculations in reduce
 
     let totalTaxes = taxBrackets.reduce(
         (taxes, currentBracket, index) => {
@@ -93,9 +94,7 @@ const calculateFederalTaxes = (grossSalary) => {
         [40126, 85525, 0.22], 
         [9876, 40125, 0.12], 
         [0, 9875, 0.10],         
-    ]; 
-
-    let salaryRemaining = grossSalary; // used for calculations in reduce 
+    ];  
 
     let fedTaxes = bracketCalculations(taxBrackets, salaryRemaining); 
 
