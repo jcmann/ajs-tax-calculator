@@ -21,24 +21,11 @@ submitButton.addEventListener('click', (event) => {
 
 });
 
-const calculateFederalTaxes = (grossSalary) => {
-    
-    // The federal tax brackets for 2020
-    // [bracketMinimum, bracketMaximum, taxRate]
-    const taxBrackets = [
-        [518400, Number.MAX_SAFE_INTEGER], 
-        [207351, 518400, 0.35],
-        [163301, 207350, 0.32],  
-        [85526, 163300, 0.24], 
-        [40126, 85525, 0.22], 
-        [9876, 40125, 0.12], 
-        [0, 9875, 0.10],         
-    ]; 
+const bracketCalculations = (taxBrackets, salaryRemaining) => {
 
     const NUM_BRACKETS = taxBrackets.length;
-    let salaryRemaining = grossSalary; // used for calculations in reduce 
 
-    let fedTaxes = taxBrackets.reduce(
+    let totalTaxes = taxBrackets.reduce(
         (taxes, currentBracket, index) => {
 
             // Extract current bracket elements
@@ -82,7 +69,28 @@ const calculateFederalTaxes = (grossSalary) => {
             return taxes; 
 
         }, 0
-    )
+    );
+
+    return totalTaxes; 
+}
+
+const calculateFederalTaxes = (grossSalary) => {
+    
+    // The federal tax brackets for 2020
+    // [bracketMinimum, bracketMaximum, taxRate]
+    const taxBrackets = [
+        [518400, Number.MAX_SAFE_INTEGER], 
+        [207351, 518400, 0.35],
+        [163301, 207350, 0.32],  
+        [85526, 163300, 0.24], 
+        [40126, 85525, 0.22], 
+        [9876, 40125, 0.12], 
+        [0, 9875, 0.10],         
+    ]; 
+
+    let salaryRemaining = grossSalary; // used for calculations in reduce 
+
+    let fedTaxes = bracketCalculations(taxBrackets, salaryRemaining); 
 
     return fedTaxes; 
 
