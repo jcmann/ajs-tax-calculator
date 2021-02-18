@@ -62,7 +62,7 @@ body {
 /******************************
     Header
 ******************************/
-header {
+header, footer {
     background-color: teal; 
     color: white; 
 
@@ -91,7 +91,12 @@ input[type="button"] {
     padding: 0.8em;
 
     border-radius: 1em;
-    border: 0px transparent; 
+    border: 2px transparent; 
+}
+
+input[type="button"]:hover, input[type="button"]:focus {
+    box-shadow: 2px 2px 4px gray; 
+    text-decoration: underline;
 }
 
 /******************************
@@ -109,6 +114,10 @@ table {
 th, td {
     padding: 0.5em 2em; 
     border: 1px solid black;
+}
+
+th {
+    font-weight: bold;
 }
 
 /******************************

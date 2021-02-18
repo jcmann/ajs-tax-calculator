@@ -11,11 +11,11 @@ submitButton.addEventListener('click', (event) => {
     let grossSalary = grossSalaryElement.value;
 
     // All types of taxes needed for this app
-    let fedTaxes = parseInt(calculateFederalTaxes(grossSalary).toFixed(2));  
-    let stateTaxes = parseInt(calculateStateTaxes(grossSalary).toFixed(2)); 
-    let medicareTaxes = parseInt(calculateMedicareTaxes(grossSalary).toFixed(2)); 
-    let ssnTaxes = parseInt(calculateSocialSecurityTax(grossSalary).toFixed(2)); 
-    let totalTaxes = fedTaxes + stateTaxes + medicareTaxes + ssnTaxes; 
+    let fedTaxes = parseFloat(calculateFederalTaxes(grossSalary).toFixed(2));  
+    let stateTaxes = parseFloat(calculateStateTaxes(grossSalary).toFixed(2)); 
+    let medicareTaxes = parseFloat(calculateMedicareTaxes(grossSalary).toFixed(2)); 
+    let ssnTaxes = parseFloat(calculateSocialSecurityTax(grossSalary).toFixed(2)); 
+    let totalTaxes = (fedTaxes + stateTaxes + medicareTaxes + ssnTaxes).toFixed(2); 
     let netPay = grossSalary - totalTaxes; 
 
     // Clear out the previously calculated salary 
@@ -60,7 +60,7 @@ const bracketCalculations = (taxBrackets, grossSalary) => {
             console.log(`Min: ${bracketMin}. Max: ${bracketMax}. Salary: ${salaryRemaining}`); 
 
             // If salaryRemaining is in the current tax bracket, calculate
-            if (salaryRemaining >= bracketMin && salaryRemaining <= bracketMax) {
+            if (salaryRemaining >= bracketMin && salaryRemaining < bracketMax) {
 
                 // If the current bracket is not the final (with min 0)... 
 
@@ -77,7 +77,7 @@ const bracketCalculations = (taxBrackets, grossSalary) => {
                         one to make it inclusive. Ex: anything above 9875 is 
                         taxed in the second bracket. 
                     */
-                    taxableIncome = salaryRemaining - (bracketMin - 1);     
+                    taxableIncome = salaryRemaining - (bracketMin);     
 
                 } else {
                     // If the index is on the final bracket, the minimum is 0, 
@@ -111,7 +111,7 @@ const calculateFederalTaxes = (grossSalary) => {
     // The federal tax brackets for 2020
     // [bracketMinimum, bracketMaximum, taxRate]
     const taxBrackets = [
-        [518401, Number.MAX_SAFE_INTEGER, 0.37], 
+        [518400, Number.MAX_SAFE_INTEGER, 0.37], 
         [207351, 518400, 0.35],
         [163301, 207350, 0.32],  
         [85526, 163300, 0.24], 
