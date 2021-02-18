@@ -14,7 +14,7 @@ submitButton.addEventListener('click', (event) => {
     let totalTaxes; 
     let netPay; 
 
-    console.log(fedTaxes); 
+    console.log(`Federal taxes: ${fedTaxes}. State: ${stateTaxes}`); 
 
     // Clear out the previously calculated salary 
     grossSalaryElement.value = ""; 
@@ -25,7 +25,7 @@ submitButton.addEventListener('click', (event) => {
     A standardized, generalized way to calculate brackets that uses
     tax brackets with any number of brackets. 
 */
-const bracketCalculations = (taxBrackets, salaryRemaining) => {
+const bracketCalculations = (taxBrackets, grossSalary) => {
 
     const NUM_BRACKETS = taxBrackets.length;
     let salaryRemaining = grossSalary; // used for calculations in reduce
@@ -96,7 +96,7 @@ const calculateFederalTaxes = (grossSalary) => {
         [0, 9875, 0.10],         
     ];  
 
-    let fedTaxes = bracketCalculations(taxBrackets, salaryRemaining); 
+    let fedTaxes = bracketCalculations(taxBrackets, grossSalary); 
 
     return fedTaxes; 
 
@@ -107,11 +107,17 @@ const calculateFederalTaxes = (grossSalary) => {
 */
 const calculateStateTaxes = (grossSalary) => {
 
+    // State taxes for Wisconsin 
+    // [bracketMin, bracketMax, taxRate]
     const taxBrackets = [
         [0, 11969.99, 0.0354],
         [11970, 23929.99, 0.0465],
         [23930, 263479.99, 0.0627],
         [263480, Number.MAX_SAFE_INTEGER, 15999.67, 0.0765] 
     ];
+
+    let stateTaxes = bracketCalculations(taxBrackets, grossSalary); 
+    
+    return stateTaxes; 
 
 }
