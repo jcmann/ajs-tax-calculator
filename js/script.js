@@ -1,7 +1,12 @@
 const grossSalaryElement = document.querySelector('#grossSalary'); 
-const submitButton = document.querySelector('#submit'); 
+const submitButton = document.querySelector('#submit');
 
 submitButton.addEventListener('click', (event) => {
+
+    // if the chart is already being output, clear it
+    if (document.querySelector('table')) {
+        document.querySelector('table').innerHTML = ""; 
+    }
 
     // Pull the grossSalary from the text input
     let grossSalary = grossSalaryElement.value;
@@ -9,10 +14,10 @@ submitButton.addEventListener('click', (event) => {
     // All variables to be calculated in this application 
 
     // TODO format amounts to DD.CC
-    let fedTaxes = calculateFederalTaxes(grossSalary);  
-    let stateTaxes = calculateStateTaxes(grossSalary); 
-    let medicareTaxes = calculateMedicareTaxes(grossSalary); 
-    let ssnTaxes =  calculateSocialSecurityTax(grossSalary); 
+    let fedTaxes = parseInt(calculateFederalTaxes(grossSalary).toFixed(2));  
+    let stateTaxes = parseInt(calculateStateTaxes(grossSalary).toFixed(2)); 
+    let medicareTaxes = parseInt(calculateMedicareTaxes(grossSalary).toFixed(2)); 
+    let ssnTaxes = parseInt(calculateSocialSecurityTax(grossSalary).toFixed(2)); 
     let totalTaxes = fedTaxes + stateTaxes + medicareTaxes + ssnTaxes; 
     let netPay = grossSalary - totalTaxes; 
 
@@ -20,6 +25,20 @@ submitButton.addEventListener('click', (event) => {
 
     // Clear out the previously calculated salary 
     grossSalaryElement.value = ""; 
+
+    let chart = document.createElement("table"); 
+    chart.innerHTML = 
+            `<tr><th>Gross Pay</th><td>${grossSalary}</td></tr>`
+            + `<tr><th>Federal Taxes</th><td>${fedTaxes}</td></tr>`
+            + `<tr><th>State Taxes</th><td>${stateTaxes}</td></tr>`
+            + `<tr><th>Medicare Taxes</th><td>${medicareTaxes}</td></tr>`
+            + `<tr><th>SSN Taxes</th><td>${ssnTaxes}</td></tr>`
+            + `<tr><th>Total Taxes</th><td>${totalTaxes}</td></tr>`
+            + `<tr><th>Net Pay</th><td>${netPay}</td></tr>`
+    ;
+    chart.id = "taxChart"; 
+
+    document.querySelector('main').appendChild(chart); 
 
 });
 
