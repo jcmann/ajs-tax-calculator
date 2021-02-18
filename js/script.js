@@ -7,14 +7,16 @@ submitButton.addEventListener('click', (event) => {
     let grossSalary = grossSalaryElement.value;
 
     // All variables to be calculated in this application 
+
+    // TODO format amounts to DD.CC
     let fedTaxes = calculateFederalTaxes(grossSalary);  
     let stateTaxes = calculateStateTaxes(grossSalary); 
-    let medicareTaxes; 
+    let medicareTaxes = calculateMedicareTaxes(grossSalary); 
     let ssnTaxes; 
     let totalTaxes; 
     let netPay; 
 
-    console.log(`Federal taxes: ${fedTaxes}. State: ${stateTaxes}`); 
+    console.log(`Federal taxes: ${fedTaxes}. State: ${stateTaxes}. Medicare: ${medicareTaxes}`); 
 
     // Clear out the previously calculated salary 
     grossSalaryElement.value = ""; 
@@ -119,5 +121,23 @@ const calculateStateTaxes = (grossSalary) => {
     let stateTaxes = bracketCalculations(taxBrackets, grossSalary); 
     
     return stateTaxes; 
+
+}
+
+/*
+    Medicare taxes 1.45% on all earnings. Any earnings after $200,000 
+    are taxed an additional 0.9%. 
+*/
+const calculateMedicareTaxes = (grossSalary) => {
+
+    let taxes = grossSalary * 0.0145; 
+
+    // Earnings over $200k get an additional 0.9% tax
+    if (grossSalary >= 200000) {
+        let above200k = grossSalary - 200000; 
+        taxes = taxes + (above200k * (0.0145 + 0.009)); 
+    } 
+
+    return taxes; 
 
 }
