@@ -1,19 +1,16 @@
 const grossSalaryElement = document.querySelector('#grossSalary'); 
 const submitButton = document.querySelector('#submit');
+const chartSection = document.querySelector('#chartSection'); 
 
 submitButton.addEventListener('click', (event) => {
 
     // if the chart is already being output, clear it
-    if (document.querySelector('table')) {
-        document.querySelector('table').innerHTML = ""; 
-    }
+    chartSection.innerHTML = ''; 
 
     // Pull the grossSalary from the text input
     let grossSalary = grossSalaryElement.value;
 
-    // All variables to be calculated in this application 
-
-    // TODO format amounts to DD.CC
+    // All types of taxes needed for this app
     let fedTaxes = parseInt(calculateFederalTaxes(grossSalary).toFixed(2));  
     let stateTaxes = parseInt(calculateStateTaxes(grossSalary).toFixed(2)); 
     let medicareTaxes = parseInt(calculateMedicareTaxes(grossSalary).toFixed(2)); 
@@ -21,11 +18,10 @@ submitButton.addEventListener('click', (event) => {
     let totalTaxes = fedTaxes + stateTaxes + medicareTaxes + ssnTaxes; 
     let netPay = grossSalary - totalTaxes; 
 
-    console.log(`Federal taxes: ${fedTaxes}. State: ${stateTaxes}. Medicare: ${medicareTaxes}`); 
-
     // Clear out the previously calculated salary 
     grossSalaryElement.value = ""; 
 
+    // Create the chart itself and then append it 
     let chart = document.createElement("table"); 
     chart.innerHTML = 
             `<tr><th>Gross Pay</th><td>${grossSalary}</td></tr>`
@@ -38,7 +34,7 @@ submitButton.addEventListener('click', (event) => {
     ;
     chart.id = "taxChart"; 
 
-    document.querySelector('main').appendChild(chart); 
+    chartSection.appendChild(chart); 
 
 });
 
@@ -51,6 +47,8 @@ const bracketCalculations = (taxBrackets, grossSalary) => {
     const NUM_BRACKETS = taxBrackets.length;
     let salaryRemaining = grossSalary; // used for calculations in reduce
 
+    console.log("Current salary remaining: " + salaryRemaining); 
+
     let totalTaxes = taxBrackets.reduce(
         (taxes, currentBracket, index) => {
 
@@ -58,6 +56,8 @@ const bracketCalculations = (taxBrackets, grossSalary) => {
             let bracketMin = currentBracket[0]; 
             let bracketMax = currentBracket[1]; 
             let taxRate = currentBracket[2]; 
+
+            console.log(`Min: ${bracketMin}. Max: ${bracketMax}. Salary: ${salaryRemaining}`); 
 
             // If salaryRemaining is in the current tax bracket, calculate
             if (salaryRemaining >= bracketMin && salaryRemaining <= bracketMax) {
@@ -90,6 +90,9 @@ const bracketCalculations = (taxBrackets, grossSalary) => {
                 taxes = taxes + (taxableIncome * taxRate); 
                 salaryRemaining = salaryRemaining - taxableIncome; 
 
+                console.log(`Taxes: ${taxes}. Taxable income: ${taxableIncome}. Rate ${taxRate}`);
+                console.log(`Salary remaining at end of loop: ${salaryRemaining}`)
+
             }
 
             return taxes; 
@@ -108,7 +111,7 @@ const calculateFederalTaxes = (grossSalary) => {
     // The federal tax brackets for 2020
     // [bracketMinimum, bracketMaximum, taxRate]
     const taxBrackets = [
-        [518400, Number.MAX_SAFE_INTEGER], 
+        [518401, Number.MAX_SAFE_INTEGER, 0.37], 
         [207351, 518400, 0.35],
         [163301, 207350, 0.32],  
         [85526, 163300, 0.24], 
@@ -134,7 +137,7 @@ const calculateStateTaxes = (grossSalary) => {
         [0, 11969.99, 0.0354],
         [11970, 23929.99, 0.0465],
         [23930, 263479.99, 0.0627],
-        [263480, Number.MAX_SAFE_INTEGER, 15999.67, 0.0765] 
+        [263480, Number.MAX_SAFE_INTEGER, 0.0765] 
     ];
 
     let stateTaxes = bracketCalculations(taxBrackets, grossSalary); 
