@@ -6,7 +6,5 @@
 4. Display that table
 5. Clear out the previously entered salary from the screen
 
-# Possible stretch goal(s)
-
-* Just implement an onchange to run when a current salary is displayed to wipe 
-out the previous values?
+# Final TODOS
+- format cents to pad right and with commas?

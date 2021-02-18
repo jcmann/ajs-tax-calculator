@@ -24,13 +24,13 @@ submitButton.addEventListener('click', (event) => {
     // Create the chart itself and then append it 
     let chart = document.createElement("table"); 
     chart.innerHTML = 
-            `<tr><th>Gross Pay</th><td>${grossSalary}</td></tr>`
-            + `<tr><th>Federal Taxes</th><td>${fedTaxes}</td></tr>`
-            + `<tr><th>State Taxes</th><td>${stateTaxes}</td></tr>`
-            + `<tr><th>Medicare Taxes</th><td>${medicareTaxes}</td></tr>`
-            + `<tr><th>SSN Taxes</th><td>${ssnTaxes}</td></tr>`
-            + `<tr><th>Total Taxes</th><td>${totalTaxes}</td></tr>`
-            + `<tr><th>Net Pay</th><td>${netPay}</td></tr>`
+            `<tr><th>Gross Pay</th><td>$${grossSalary}</td></tr>`
+            + `<tr><th>Federal Taxes</th><td>$${fedTaxes}</td></tr>`
+            + `<tr><th>State Taxes</th><td>$${stateTaxes}</td></tr>`
+            + `<tr><th>Medicare Taxes</th><td>$${medicareTaxes}</td></tr>`
+            + `<tr><th>SSN Taxes</th><td>$${ssnTaxes}</td></tr>`
+            + `<tr><th>Total Taxes</th><td>$${totalTaxes}</td></tr>`
+            + `<tr><th>Net Pay</th><td>$${netPay}</td></tr>`
     ;
     chart.id = "taxChart"; 
 
@@ -47,8 +47,6 @@ const bracketCalculations = (taxBrackets, grossSalary) => {
     const NUM_BRACKETS = taxBrackets.length;
     let salaryRemaining = grossSalary; // used for calculations in reduce
 
-    console.log("Current salary remaining: " + salaryRemaining); 
-
     let totalTaxes = taxBrackets.reduce(
         (taxes, currentBracket, index) => {
 
@@ -56,8 +54,6 @@ const bracketCalculations = (taxBrackets, grossSalary) => {
             let bracketMin = currentBracket[0]; 
             let bracketMax = currentBracket[1]; 
             let taxRate = currentBracket[2]; 
-
-            console.log(`Min: ${bracketMin}. Max: ${bracketMax}. Salary: ${salaryRemaining}`); 
 
             // If salaryRemaining is in the current tax bracket, calculate
             if (salaryRemaining >= bracketMin && salaryRemaining < bracketMax) {
@@ -89,9 +85,6 @@ const bracketCalculations = (taxBrackets, grossSalary) => {
                 // salaryRemaining is purely used for calculations 
                 taxes = taxes + (taxableIncome * taxRate); 
                 salaryRemaining = salaryRemaining - taxableIncome; 
-
-                console.log(`Taxes: ${taxes}. Taxable income: ${taxableIncome}. Rate ${taxRate}`);
-                console.log(`Salary remaining at end of loop: ${salaryRemaining}`)
 
             }
 
