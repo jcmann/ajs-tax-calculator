@@ -12,9 +12,9 @@ submitButton.addEventListener('click', (event) => {
     let fedTaxes = calculateFederalTaxes(grossSalary);  
     let stateTaxes = calculateStateTaxes(grossSalary); 
     let medicareTaxes = calculateMedicareTaxes(grossSalary); 
-    let ssnTaxes; 
-    let totalTaxes; 
-    let netPay; 
+    let ssnTaxes =  calculateSocialSecurityTax(grossSalary); 
+    let totalTaxes = fedTaxes + stateTaxes + medicareTaxes + ssnTaxes; 
+    let netPay = grossSalary - totalTaxes; 
 
     console.log(`Federal taxes: ${fedTaxes}. State: ${stateTaxes}. Medicare: ${medicareTaxes}`); 
 
@@ -130,14 +130,29 @@ const calculateStateTaxes = (grossSalary) => {
 */
 const calculateMedicareTaxes = (grossSalary) => {
 
-    let taxes = grossSalary * 0.0145; 
+    const MED_BASE_TAX_RATE = 0.0145; 
+    let taxes = grossSalary * MED_BASE_TAX_RATE; 
 
     // Earnings over $200k get an additional 0.9% tax
     if (grossSalary >= 200000) {
         let above200k = grossSalary - 200000; 
-        taxes = taxes + (above200k * (0.0145 + 0.009)); 
+        taxes = taxes + (above200k * (MED_BASE_TAX_RATE + 0.009)); 
     } 
 
     return taxes; 
 
+}
+
+/*
+    Social security taxes are 6.2% on earnings up to 137,000 only. Anything
+    above that is not taxed for social security. 
+*/
+const calculateSocialSecurityTax = (grossSalary) => {
+
+    let SOC_TAX_RATE = 0.062; 
+
+    let taxes = (grossSalary > 137000) ?  137000 * SOC_TAX_RATE 
+            : grossSalary  * SOC_TAX_RATE; 
+
+    return taxes; 
 }
