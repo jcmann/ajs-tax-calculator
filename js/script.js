@@ -9,6 +9,7 @@ const handler = (event) => {
 
     // Pull the grossSalary from the text input
     let grossSalary = grossSalaryElement.value;
+    
 
     // All types of taxes needed for this app
     // TODO figure out how to incorporate the formatter method here, and clean it
@@ -25,32 +26,42 @@ const handler = (event) => {
     // Create the chart itself and then append it 
     let chart = document.createElement("table"); 
     chart.innerHTML = 
-            `<tr><th>Gross Pay</th><td>$${grossSalary}</td></tr>`
-            + `<tr><th>Federal Taxes</th><td>$${fedTaxes}</td></tr>`
-            + `<tr><th>State Taxes</th><td>$${stateTaxes}</td></tr>`
-            + `<tr><th>Medicare Taxes</th><td>$${medicareTaxes}</td></tr>`
-            + `<tr><th>SSN Taxes</th><td>$${ssnTaxes}</td></tr>`
-            + `<tr><th>Total Taxes</th><td>$${totalTaxes}</td></tr>`
-            + `<tr><th>Net Pay</th><td>$${netPay}</td></tr>`
+            `<tr><th>Gross Pay</th><td>$${formatString(grossSalary)}</td></tr>`
+            + `<tr><th>Federal Taxes</th><td>$${formatString(fedTaxes)}</td></tr>`
+            + `<tr><th>State Taxes</th><td>$${formatString(stateTaxes)}</td></tr>`
+            + `<tr><th>Medicare Taxes</th><td>$${formatString(medicareTaxes)}</td></tr>`
+            + `<tr><th>SSN Taxes</th><td>$${formatString(ssnTaxes)}</td></tr>`
+            + `<tr><th>Total Taxes</th><td>$${formatString(totalTaxes)}</td></tr>`
+            + `<tr><th>Net Pay</th><td>$${formatString(netPay)}</td></tr>`
     ;
     chart.id = "taxChart"; 
 
     chartSection.appendChild(chart); 
 
 }
-
+/*
+    Event listener for when the user hits the enter key in the text input. 
+    Calls the standard handler method, handler. 
+*/
 grossSalaryElement.addEventListener('keyup', (event) => {
     if (event.key === 'Enter') {
         handler(event); 
     }
 });
 
+/*
+    Event listener for when the user clicks the Calculate Taxes button. 
+    Calls the standard handler method, handler. 
+*/
 submitButton.addEventListener('click', (event) => {
-    
     handler(event); 
-
 });
 
+/*
+    Formats strings with decimals so they have right-padded zeroes. 
+    For example: if amount = 12, this will return 12.00. If amount = 12.2, 
+    then this will return 12.20. 
+*/
 const formatString = (amount) => {
 
     let amountString = amount.toString(); 
