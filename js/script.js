@@ -2,6 +2,11 @@ const grossSalaryElement = document.querySelector('#grossSalary');
 const submitButton = document.querySelector('#submitBtn');
 const chartSection = document.querySelector('#chartSection');
 
+/*
+    A standardized handler method. This is called from inside event listeners
+    so different event listeners that represent submission of the "form" are
+    able to use the same code. 
+*/ 
 const handler = (event) => {
 
     // if the chart is already being output, clear it
