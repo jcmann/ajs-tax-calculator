@@ -1,8 +1,11 @@
 const grossSalaryElement = document.querySelector('#grossSalary'); 
-const submitButton = document.querySelector('#submit');
-const chartSection = document.querySelector('#chartSection'); 
+const submitButton = document.querySelector('#submitBtn');
+const chartSection = document.querySelector('#chartSection');
 
-submitButton.addEventListener('click', (event) => {
+const handler = (event) => {
+
+    event.preventDefault(); 
+    console.log(event); 
 
     // if the chart is already being output, clear it
     chartSection.innerHTML = ''; 
@@ -35,6 +38,18 @@ submitButton.addEventListener('click', (event) => {
     chart.id = "taxChart"; 
 
     chartSection.appendChild(chart); 
+
+}
+
+grossSalaryElement.addEventListener('keyup', (event) => {
+    if (event.key === 'Enter') {
+        handler(event); 
+    }
+});
+
+submitButton.addEventListener('click', (event) => {
+    
+    handler(event); 
 
 });
 
