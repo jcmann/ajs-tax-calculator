@@ -4,9 +4,6 @@ const chartSection = document.querySelector('#chartSection');
 
 const handler = (event) => {
 
-    event.preventDefault(); 
-    console.log(event); 
-
     // if the chart is already being output, clear it
     chartSection.innerHTML = ''; 
 
@@ -52,6 +49,29 @@ submitButton.addEventListener('click', (event) => {
     handler(event); 
 
 });
+
+const formatString = (amount) => {
+
+    let amountString = amount.toString(); 
+
+    // determine if the string contains a decimal point 
+    let decimalIndex = amountString.indexOf('.'); 
+
+    let paddedZeroes = ""; 
+
+    if (decimalIndex == -1) {
+        // there is no decimal, ex: "140"
+        // Note that numbers like 140.00 (all 0s after decimal) will remove 0s
+        paddedZeroes = ".00"; 
+    } else {
+        // determine how many digits follow the decimal and pad if 1
+        let digitsAfterDecimal = amountString.substring(decimalIndex + 1, amountString.length).length; 
+        paddedZeroes = (digitsAfterDecimal === 1) ? + "0" : ""; 
+    }
+
+    
+
+}
 
 /*
     A standardized, generalized way to calculate brackets that uses
