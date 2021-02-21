@@ -68,12 +68,10 @@ submitButton.addEventListener('click', (event) => {
 const formatString = (amount) => {
 
     let amountString = amount.toString(); 
-
-    // determine if the string contains a decimal point 
     let decimalIndex = amountString.indexOf('.'); 
 
     // The following code creates a new substring of the necessary amount
-    // of 0s needed to pad the end of the money string. 
+    // of 0s needed to pad the end of the money string, if any.  
     let paddedZeroes = ""; 
 
     if (decimalIndex == -1) {
