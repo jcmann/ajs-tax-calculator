@@ -11,6 +11,7 @@ const handler = (event) => {
     let grossSalary = grossSalaryElement.value;
 
     // All types of taxes needed for this app
+    // TODO figure out how to incorporate the formatter method here, and clean it
     let fedTaxes = parseFloat(calculateFederalTaxes(grossSalary).toFixed(2));  
     let stateTaxes = parseFloat(calculateStateTaxes(grossSalary).toFixed(2)); 
     let medicareTaxes = parseFloat(calculateMedicareTaxes(grossSalary).toFixed(2)); 
@@ -57,6 +58,8 @@ const formatString = (amount) => {
     // determine if the string contains a decimal point 
     let decimalIndex = amountString.indexOf('.'); 
 
+    // The following code creates a new substring of the necessary amount
+    // of 0s needed to pad the end of the money string. 
     let paddedZeroes = ""; 
 
     if (decimalIndex == -1) {
@@ -69,7 +72,7 @@ const formatString = (amount) => {
         paddedZeroes = (digitsAfterDecimal === 1) ? + "0" : ""; 
     }
 
-    
+    return amountString + paddedZeroes; 
 
 }
 
