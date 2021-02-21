@@ -15,9 +15,7 @@ const handler = (event) => {
     // Pull the grossSalary from the text input
     let grossSalary = grossSalaryElement.value;
     
-
     // All types of taxes needed for this app
-    // TODO figure out how to incorporate the formatter method here, and clean it
     let fedTaxes = parseFloat(calculateFederalTaxes(grossSalary).toFixed(2));  
     let stateTaxes = parseFloat(calculateStateTaxes(grossSalary).toFixed(2)); 
     let medicareTaxes = parseFloat(calculateMedicareTaxes(grossSalary).toFixed(2)); 
