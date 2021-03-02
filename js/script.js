@@ -10,7 +10,7 @@ const chartSection = document.querySelector('#chartSection');
 const handler = (event) => {
 
     // if the chart is already being output, clear it
-    chartSection.innerHTML = ''; 
+    chartSection.innerHTML = ""; 
 
     // Pull the grossSalary from the text input
     let grossSalary = grossSalaryElement.value;
@@ -46,8 +46,8 @@ const handler = (event) => {
     Event listener for when the user hits the enter key in the text input. 
     Calls the standard handler method, handler. 
 */
-grossSalaryElement.addEventListener('keyup', (event) => {
-    if (event.key === 'Enter') {
+grossSalaryElement.addEventListener("keyup", (event) => {
+    if (event.key === "Enter") {
         handler(event); 
     }
 });
@@ -56,7 +56,7 @@ grossSalaryElement.addEventListener('keyup', (event) => {
     Event listener for when the user clicks the Calculate Taxes button. 
     Calls the standard handler method, handler. 
 */
-submitButton.addEventListener('click', (event) => {
+submitButton.addEventListener("click", (event) => {
     handler(event); 
 });
 
