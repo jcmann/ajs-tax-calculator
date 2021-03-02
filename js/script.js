@@ -106,7 +106,7 @@ const bracketCalculations = (taxBrackets, grossSalary) => {
             let taxRate = currentBracket[2]; 
 
             // If salaryRemaining is in the current tax bracket, calculate
-            if (salaryRemaining >= bracketMin && salaryRemaining < bracketMax) {
+            if (salaryRemaining >= bracketMin && salaryRemaining <= bracketMax) {
 
                 // If the current bracket is not the final (with min 0)... 
 
