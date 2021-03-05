@@ -33,14 +33,22 @@ window.addEventListener("load", (event) => {
 
         // Pull the grossSalary from the text input
         let grossSalary = grossSalaryElement.value;
-        
-        // All types of taxes needed for this app
-        let fedTaxes = parseFloat(calculateFederalTaxes(grossSalary).toFixed(2));  
-        let stateTaxes = parseFloat(calculateStateTaxes(grossSalary).toFixed(2)); 
-        let medicareTaxes = parseFloat(calculateMedicareTaxes(grossSalary).toFixed(2)); 
-        let ssnTaxes = parseFloat(calculateSocialSecurityTax(grossSalary).toFixed(2)); 
-        let totalTaxes = (fedTaxes + stateTaxes + medicareTaxes + ssnTaxes).toFixed(2); 
+
+        // calculate the raw amount for all tax brackets 
+        let fedTaxes = calculateFederalTaxes(grossSalary);  
+        let stateTaxes = calculateStateTaxes(grossSalary); 
+        let medicareTaxes = calculateMedicareTaxes(grossSalary); 
+        let ssnTaxes = calculateSocialSecurityTax(grossSalary); 
+        let totalTaxes = (fedTaxes + stateTaxes + medicareTaxes + ssnTaxes); 
         let netPay = grossSalary - totalTaxes; 
+
+        // format and display taxes with parseFloat and toFixed
+        fedTaxes = parseFloat(fedTaxes.toFixed(2)); 
+        stateTaxes = parseFloat(stateTaxes.toFixed(2));
+        medicareTaxes = parseFloat(medicareTaxes.toFixed(2));
+        ssnTaxes = parseFloat(ssnTaxes.toFixed(2));
+        totalTaxes = parseFloat(totalTaxes.toFixed(2));
+        netPay = parseFloat(netPay.toFixed(2));
 
         // Clear out the previously calculated salary 
         grossSalaryElement.value = ""; 
@@ -68,7 +76,9 @@ window.addEventListener("load", (event) => {
         then this will return 12.20. 
     */
     const formatString = (amount) => {
-
+        // TODO
+        // fedTaxes = parseFloat(fedTaxes.toFixed(2)); 
+        //let amountString = parseFloat(amount.toFixed(2));  
         let amountString = "$" + amount.toString(); 
         let decimalIndex = amountString.indexOf('.'); 
 
